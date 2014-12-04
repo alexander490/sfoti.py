@@ -1,7 +1,6 @@
 from django.contrib import admin
-
 from tracks.models import Track
-
+from sfotipy.actions import export_as_excel
 
 class TrackAdmin(admin.ModelAdmin):
     list_display = (
@@ -11,6 +10,7 @@ class TrackAdmin(admin.ModelAdmin):
     list_editable = ('name', 'album', )
     # actions
     raw_id_fields = ('artist', )
+    actions = (export_as_excel, )
 
     def is_guetta(self, obj):
         return obj.artist.id == 1
