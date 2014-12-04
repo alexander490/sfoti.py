@@ -26,10 +26,10 @@ def track_view(req, id):
     except Track.DoesNotExist:
         track = None
 
-    json_data = serializers.serialize('json', [track, ],
-                                 indent=4,
-                                 use_natural_foreign_keys=True,
-                                 use_natural_primary_keys=True)
+    # json_data = serializers.serialize('json', [track, ],
+    #                              indent=4,
+    #                              use_natural_foreign_keys=True,
+    #                              use_natural_primary_keys=True)
 
-    return HttpResponse(json_data, content_type='application/json')
-    # return render(req, 'track.html', {'track': track})
+    # return HttpResponse(json_data, content_type='application/json')
+    return render(req, 'track.html', {'track': track})

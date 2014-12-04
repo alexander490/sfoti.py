@@ -5,6 +5,18 @@
 	<title>Track</title>
 </head>
 <body>
+	<nav>
+		<ul>
+			{% for track in tracks %}
+			<li>
+				<a href="/tracks/{{track.id}}">{{ track.name }}</a>
+				{% if track.id == selected_track.id %}
+				*****************
+				{% endif %}
+			</li>
+			{% endfor %}
+		</ul>
+	</nav>
 	<section>
 		<p>Name: {{ track.name }}</p>
 		<p>Order: {{ track.order }}</p>
