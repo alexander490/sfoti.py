@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     'userprofiles',
     #'mockups',
     'django_extensions',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (

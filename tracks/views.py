@@ -2,7 +2,9 @@ import json
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.core import serializers
+from rest_framework import viewsets
 from tracks.models import Track
+from tracks.serializers import TrackSerializer
 
 
 def track_view(req, id):
@@ -33,3 +35,7 @@ def track_view(req, id):
 
     # return HttpResponse(json_data, content_type='application/json')
     return render(req, 'track.html', {'track': track})
+
+class TrackViewSet(viewsets.ModelViewSet):
+    queryset = Track.objects.all()
+    serializer_class = TrackSerializer
