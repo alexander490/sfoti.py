@@ -5,6 +5,8 @@
 	<title>Artist</title>
 </head>
 <body>
+	{% load static from staticfiles %}
+	<img src="{% static "umf-2014.jpg" %}" alt="UMF 2014" width="250">
 	<section>
 		<p>First Name: {{ object.first_name }}</p>
 		<p>Last Name: {{ object.last_name }}</p>
