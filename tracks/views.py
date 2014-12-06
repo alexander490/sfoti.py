@@ -1,12 +1,18 @@
 import json
+import time
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.core import serializers
+from django.contrib.auth.decorators import login_required
+from django.core.cache import cache
+from django.views.decorators.cache import cache_page
 from rest_framework import viewsets
 from tracks.models import Track
 from tracks.serializers import TrackSerializer
 
 
+@cache_page(60)
+@login_required
 def track_view(req, id):
     # track = get_object_or_404(Track, pk=id)
 
@@ -23,10 +29,14 @@ def track_view(req, id):
     # json_data = json.dumps(data)
     # json.loads(string_json)
 
-    try:
-        track = Track.objects.get(pk=id)
-    except Track.DoesNotExist:
-        track = None
+    track = cache.get('data_track_{id}'.format(id=id))
+    if track is None:
+        try:
+            track = Track.objects.get(pk=id)
+            cache.set('data_track_{id}'.format(id=id), track)
+        except Track.DoesNotExist:
+            track = None
+        time.sleep(5)
 
     # json_data = serializers.serialize('json', [track, ],
     #                              indent=4,

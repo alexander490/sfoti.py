@@ -1,3 +1,4 @@
+{% load cache %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,7 @@
 	<title>Track</title>
 </head>
 <body>
+	<h2>{{ request.user }}</h2>
 	<nav>
 		<ul>
 			{% for track in tracks %}
@@ -18,7 +20,9 @@
 		</ul>
 	</nav>
 	<section>
+		{% cache 60 track.name %}
 		<p>Name: {{ track.name }}</p>
+		{% endcache %}
 		<p>Order: {{ track.order }}</p>
 		<p>File: {{ track.track_file }}</p>
 		<p>Album: {{ track.album }}</p>

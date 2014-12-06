@@ -20,11 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'y%z5td@=slil#4yzx%db6^gbd-(xx+_-30$a_l3hh%g5##wonz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -52,9 +52,11 @@ INSTALLED_APPS = (
     #'mockups',
     'django_extensions',
     'rest_framework',
+    'sorl.thumbnail',
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -63,6 +65,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'sfotipy.middleware.PaisMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 ROOT_URLCONF = 'sfotipy.urls'
@@ -119,6 +122,27 @@ STATIC_ROOT = os.sep.join(
 MEDIA_ROOT = os.sep.join(
     os.path.abspath(__file__).split(os.sep)[:-2] + ['media'])
 MEDIA_URL = '/media/'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': 'localhost:6379',
+        'OPTIONS': {
+            'DB': 1,
+            # 'PASSWORD': 'yadayada',
+            'PARSER_CLASS': 'redis.connection.HiredisParser',
+            # 'CONNECTION_POOL_CLASS': 'redis.BlockingConnectionPool',
+            # 'CONNECTION_POOL_CLASS_KWARGS': {
+            #     'max_connections': 50,
+            #     'timeout': 20,
+            # }
+        },
+    },
+}
+
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
 # Backends
 # AUTHENTICATION_BACKENDS = (
