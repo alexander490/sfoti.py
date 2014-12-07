@@ -9,7 +9,7 @@ from django.views.decorators.cache import cache_page
 from rest_framework import viewsets
 from tracks.models import Track
 from tracks.serializers import TrackSerializer
-
+from sfotipy.tasks import demorada
 
 @cache_page(60)
 @login_required
@@ -44,6 +44,8 @@ def track_view(req, id):
     #                              use_natural_primary_keys=True)
 
     # return HttpResponse(json_data, content_type='application/json')
+
+    demorada.apply_async(countdown=10, expires=20)
     return render(req, 'track.html', {'track': track})
 
 class TrackViewSet(viewsets.ModelViewSet):

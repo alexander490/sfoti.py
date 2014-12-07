@@ -53,10 +53,11 @@ INSTALLED_APPS = (
     'django_extensions',
     'rest_framework',
     'sorl.thumbnail',
+    'djcelery',
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -65,7 +66,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'sfotipy.middleware.PaisMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 ROOT_URLCONF = 'sfotipy.urls'
@@ -143,6 +144,15 @@ CACHES = {
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+
+import djcelery
+djcelery.setup_loader()
+
+BROKER_URL = 'redis://localhost:6379/0'
+
+# TEST_RUNNER = 'djcelery.contrib.test_runner.CeleryTestSuiteRunner'
+# CELERY_ALWAYS_EAGER = True
+# BROKER_BACKEND = 'memory'
 
 # Backends
 # AUTHENTICATION_BACKENDS = (

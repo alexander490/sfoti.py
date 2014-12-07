@@ -1,7 +1,8 @@
 from django.db import models
-from django.core.cache import cache
-from django.db.models.signals import post_save
-from django.contrib.sessions.models import Session
+# from django.core.cache import cache
+# from django.db.models.signals import post_save
+# from django.contrib.sessions.models import Session
+# from django.dispatch import receiver
 
 class Artist(models.Model):
     first_name = models.CharField(max_length=140)
