@@ -1,5 +1,7 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import login
+from django.views.generic import View
 
 from userprofiles.forms import UserCreationEmailForm, EmailAuthenticationForm
 
@@ -18,3 +20,9 @@ def signin(req):
 		login(req, form.get_user())
 		
 	return render(req, 'signin.html', {'form': form})
+
+
+class LoginView(View):
+
+	def get(self, req, *args, **kwargs):
+		return HttpResponse('LoginView !!!')

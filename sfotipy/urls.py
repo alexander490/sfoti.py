@@ -5,6 +5,7 @@ from rest_framework import routers
 from tracks.views import TrackViewSet
 from artists.views import ArtistDetailView, ArtistViewSet
 from albums.views import AlbumViewSet
+from userprofiles.urls import urlpatterns as urls_userprofiles
 
 router = routers.DefaultRouter()
 router.register(r'tracks', TrackViewSet)
@@ -26,5 +27,7 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('', 
-	url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, }),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, }),
 )
+
+urlpatterns += urls_userprofiles
