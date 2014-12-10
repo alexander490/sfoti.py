@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="">
+	<figure style="text-align: center;">
+		<img src="/media/{{ userprofile.avatar }}" 
+			alt="{{ userprofile.user.username }}" width="300">
+		<figcaption>{{ userprofile.user.username }}</figcaption>
+	</figure>
+</div>
+{% endblock content %}
