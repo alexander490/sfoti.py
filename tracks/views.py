@@ -11,6 +11,7 @@ from tracks.models import Track
 from tracks.serializers import TrackSerializer
 from sfotipy.tasks import demorada
 
+
 @cache_page(60)
 @login_required
 def track_view(req, id):
@@ -47,6 +48,7 @@ def track_view(req, id):
 
     demorada.apply_async(countdown=10, expires=20)
     return render(req, 'track.html', {'track': track})
+
 
 class TrackViewSet(viewsets.ModelViewSet):
     queryset = Track.objects.all()

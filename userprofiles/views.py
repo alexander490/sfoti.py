@@ -1,9 +1,7 @@
+from django.contrib.auth import login
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.contrib.auth import login
-# from django.views.generic import View
-from django.views.generic import TemplateView
-
+from django.views.generic import TemplateView, View, RedirectView
 from userprofiles.forms import UserCreationEmailForm, EmailAuthenticationForm
 
 
@@ -27,8 +25,8 @@ def signin(req):
 
 # class LoginView(View):
 
-# 	def get(self, req, *args, **kwargs):
-# 		return HttpResponse('LoginView !!!')
+#   def get(self, req, *args, **kwargs):
+#       return HttpResponse('LoginView !!!')
 
 class LoginView(TemplateView):
     template_name = 'login.html'
@@ -65,3 +63,8 @@ class ProfileView(TemplateView):
 
     def get_userprofile(self):
         return self.request.user.userprofile
+
+
+class PerfilRedirectView(RedirectView):
+    # url = '/profile/'
+    pattern_name = 'profile'
