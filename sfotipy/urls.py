@@ -24,6 +24,7 @@ urlpatterns = patterns('',
     url(r'^signin/', 'userprofiles.views.signin', name='signin'),
     url(r'^artist/(?P<pk>[\d]+)/', ArtistDetailView.as_view(), name='artist'),
     url(r'^api/', include(router.urls)),
+    url(r'', include('albums.urls')),
 )
 
 urlpatterns += patterns('', 

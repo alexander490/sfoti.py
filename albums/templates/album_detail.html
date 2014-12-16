@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ object.name }}</h1>
+
+<div class="pure-g" style="text-align: center;">
+	<div class="pure-u-1-2" style="text-align: center;">
+		<figure>
+			<img src="/media/{{ object.cover }}" alt="{{ object.name }}" width="300">
+			<figcaption>{{ object.name }}</figcaption>
+			<fieldset>{{ object.artist }}</fieldset>
+		</figure>
+	</div>
+	<div class="pure-u-1-2" style="text-align: center;">
+		{% for track in object.track_set.all %}
+		<fieldset>{{ track }}</fieldset>
+		{% empty %}
+		<div class="pure-u-1">No hay tracks</div>
+		{% endfor %}
+	</div>
+</div>
+
+{% endblock content %}

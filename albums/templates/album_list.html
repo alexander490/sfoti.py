@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Albums</h1>
+
+<div class="pure-g">
+	{% for album in object_list %}
+	<div class="pure-u-1-3" style="text-align: center;">
+		<figure>
+			<img src="/media/{{ album.cover }}" alt="{{ album.name }}" width="250">
+			<figcaption>{{ album.name }}</figcaption>
+			<fieldset>{{ album.artist }}</fieldset>
+		</figure>
+	</div>
+	{% endfor %}
+</div>
+
+{% endblock content %}
