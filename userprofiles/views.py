@@ -1,8 +1,10 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import TemplateView, View, RedirectView
-from userprofiles.forms import UserCreationEmailForm, EmailAuthenticationForm
+from django.views.generic import TemplateView, View, RedirectView, FormView
+from userprofiles.forms import UserCreationEmailForm, EmailAuthenticationForm, LoginForm
+from userprofiles.mixins import LoginRequiredMixin
 
 
 def signup(req):
@@ -28,8 +30,32 @@ def signin(req):
 #   def get(self, req, *args, **kwargs):
 #       return HttpResponse('LoginView !!!')
 
-class LoginView(TemplateView):
+# class LoginView(TemplateView):
+#     template_name = 'login.html'
+
+#     def get_context_data(self, **kwargs):
+#         context = super(LoginView, self).get_context_data(**kwargs)
+#         is_auth = False
+#         name = None
+
+#         if self.request.user.is_authenticated():
+#             is_auth = True
+#             name = self.request.user.username
+
+#         data = {
+#             'is_auth': is_auth,
+#             'name': name
+#         }
+
+#         context.update(data)
+
+#         return context
+
+class LoginView(FormView):
+    #form_class = LoginForm
+    form_class = AuthenticationForm
     template_name = 'login.html'
+    success_url = '/profile/'
 
     def get_context_data(self, **kwargs):
         context = super(LoginView, self).get_context_data(**kwargs)
@@ -49,8 +75,26 @@ class LoginView(TemplateView):
 
         return context
 
+    def form_valid(self, form):
+        # username = form.cleaned_data.get('username')
+        # password = form.cleaned_data.get('password')
 
-class ProfileView(TemplateView):
+        # user = authenticate(username=username, password=password)
+
+        # if user is not None:
+        #     if user.is_active:
+        #         login(self.request, user)
+        #     else:
+        #         self.success_url = '/login/'
+        # else:
+        #     self.success_url = '/login/'
+
+        login(self.request, form.get_user())
+
+        return super(LoginView, self).form_valid(form)
+
+
+class ProfileView(LoginRequiredMixin, TemplateView):
     template_name = 'profile.html'
 
     def get_context_data(self, **kwargs):

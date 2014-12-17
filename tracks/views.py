@@ -6,6 +6,7 @@ from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.views.decorators.cache import cache_page
+from django.views.generic import ListView
 from rest_framework import viewsets
 from tracks.models import Track
 from tracks.serializers import TrackSerializer
@@ -53,3 +54,8 @@ def track_view(req, id):
 class TrackViewSet(viewsets.ModelViewSet):
     queryset = Track.objects.all()
     serializer_class = TrackSerializer
+
+class TrackListView(ListView):
+    model = Track
+    template_name = 'track_list.html'
+    queryset = Track.objects.top()[:2]

@@ -5,6 +5,7 @@ from django.views.generic import ListView, DetailView
 from rest_framework import viewsets
 from albums.models import Album
 from albums.serializers import AlbumSerializer
+from userprofiles.mixins import LoginRequiredMixin
 
 
 class AlbumViewSet(viewsets.ModelViewSet):
@@ -27,7 +28,7 @@ class JsonResponseMixin(object):
         return JsonResponse(self.json_to_response(), safe=False)
 
 
-class AlbumListView(JsonResponseMixin, ListView):
+class AlbumListView(LoginRequiredMixin, JsonResponseMixin, ListView):
     model = Album
     paginate_by = None
     template_name = 'album_list.html'
@@ -62,7 +63,7 @@ class AlbumListView(JsonResponseMixin, ListView):
         return queryset
 
 
-class AlbumDetailView(JsonResponseMixin, DetailView):
+class AlbumDetailView(LoginRequiredMixin, JsonResponseMixin, DetailView):
     model = Album
     template_name = 'album_detail.html'
 

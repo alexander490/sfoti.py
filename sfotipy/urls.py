@@ -25,6 +25,7 @@ urlpatterns = patterns('',
     url(r'^artist/(?P<pk>[\d]+)/', ArtistDetailView.as_view(), name='artist'),
     url(r'^api/', include(router.urls)),
     url(r'', include('albums.urls')),
+    url(r'', include('tracks.urls')),
 )
 
 urlpatterns += patterns('', 

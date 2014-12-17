@@ -2,9 +2,10 @@ from django.contrib import admin
 from tracks.models import Track
 from sfotipy.actions import export_as_excel
 
+@admin.register(Track)
 class TrackAdmin(admin.ModelAdmin):
     list_display = (
-        'artist', 'name', 'order', 'album', 'player', 'is_guetta', )
+        'artist', 'name', 'order', 'listen', 'album', 'player', 'is_guetta', )
     list_filter = ('artist', 'album', )
     search_fields = ('name', 'artist__first_name', 'artist__last_name', )
     list_editable = ('name', 'album', )
@@ -17,4 +18,4 @@ class TrackAdmin(admin.ModelAdmin):
 
     is_guetta.boolean = True
 
-admin.site.register(Track, TrackAdmin)
+# admin.site.register(Track, TrackAdmin)
